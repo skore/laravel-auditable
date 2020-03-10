@@ -1,0 +1,35 @@
+{
+    "name": "skore-labs/laravel-auditable",
+    "description": "Audit the users that performs actions to your application models",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rubén Robles",
+            "email": "d8vjork@outlook.com"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "illuminate/database": "~5.5.0|^6.0|^7.0",
+        "illuminate/support": "~5.5.0|^6.0|^7.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "~3.6.0|~3.7.0|~3.8.0",
+        "phpunit/phpunit": "^7.0|^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "SkoreLabs\\LaravelAuditable\\": "src"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SkoreLabs\\LaravelAuditable\\ServiceProvider"
+            ]
+        }
+    }
+}
