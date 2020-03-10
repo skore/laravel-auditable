@@ -13,7 +13,8 @@ class AuditableWasChanged implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  \SkoreLabs\LaravelAuditable\Events\AuditableEvent  $event
+     * @param \SkoreLabs\LaravelAuditable\Events\AuditableEvent $event
+     *
      * @return void
      */
     public function handle(AuditableEvent $event)
@@ -33,6 +34,7 @@ class AuditableWasChanged implements ShouldQueue
      * Get action related column of the model.
      *
      * @param mixed $action
+     *
      * @return string
      */
     protected function getActionColumn($action)

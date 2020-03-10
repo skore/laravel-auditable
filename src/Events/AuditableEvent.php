@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 abstract class AuditableEvent
 {
-    use Dispatchable, SerializesModels;
-
+    use Dispatchable;
+    use SerializesModels;
     /**
      * @var \Illuminate\Database\Eloquent\Model
      */
@@ -32,6 +32,7 @@ abstract class AuditableEvent
      * Create a new event instance.
      *
      * @param \Illuminate\Database\Eloquent\Model $model
+     *
      * @return void
      */
     public function __construct(Model $model)
