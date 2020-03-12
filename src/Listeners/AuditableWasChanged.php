@@ -17,7 +17,7 @@ class AuditableWasChanged
     {
         $actionStr = $this->getActionColumn($event->action);
 
-        if (!$event->user && $model->{$actionStr} == $event->user->id) {
+        if (blank($event->user) || $event->model->{$actionStr} == $event->user->id) {
             return false;
         }
 
