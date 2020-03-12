@@ -10,7 +10,8 @@ class AuditableWasChanged
     /**
      * Handle the event.
      *
-     * @param  \App\Events\AuditableEvent  $event
+     * @param \App\Events\AuditableEvent $event
+     *
      * @return void
      */
     public function handle(AuditableEvent $event)
@@ -32,6 +33,7 @@ class AuditableWasChanged
      * Get action related column of the model.
      *
      * @param string $action
+     *
      * @return string
      */
     public function getActionColumn($action)
