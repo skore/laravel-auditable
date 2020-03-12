@@ -2,42 +2,39 @@
 
 namespace SkoreLabs\LaravelAuditable\Listeners;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Str;
 use SkoreLabs\LaravelAuditable\Events\AuditableEvent;
 
-class AuditableWasChanged implements ShouldQueue
+class AuditableWasChanged
 {
-    use InteractsWithQueue;
-
     /**
      * Handle the event.
      *
-     * @param \SkoreLabs\LaravelAuditable\Events\AuditableEvent $event
-     *
+     * @param  \App\Events\AuditableEvent  $event
      * @return void
      */
     public function handle(AuditableEvent $event)
     {
         $actionStr = $this->getActionColumn($event->action);
 
-        if (!$event->user && $event->model->isGuarded($actionStr) && !$event->model->{$actionStr}) {
-            return $this->delete();
+        if (!$event->user && $model->{$actionStr} == $event->user->id) {
+            return false;
         }
 
-        dump($event->action);
-        $event->model->{$actionStr} = $event->user->id;
-        $event->model->save();
+        if ($event->model->isGuarded($actionStr)) {
+            $event->model->{lcfirst(Str::studly($actionStr))}()->associate($event->user->id);
+        } else {
+            $event->model->{$actionStr} = $event->user->id;
+        }
     }
 
     /**
      * Get action related column of the model.
      *
-     * @param mixed $action
-     *
+     * @param string $action
      * @return string
      */
-    protected function getActionColumn($action)
+    public function getActionColumn($action)
     {
         switch ($action) {
             default:

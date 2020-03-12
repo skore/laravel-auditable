@@ -17,26 +17,33 @@ trait Auditable
     public function initializeAuditable()
     {
         $attrs = [];
-        $dispatchesEvents = [];
 
         if ($this->getCreatedAtColumn()) {
-            $dispatchesEvents['creating'] = AuditableModelIsCreating::class;
+            static::creating(function () {
+                event(new AuditableModelIsCreating($this));
+            });
+
             $attrs[] = 'created_by';
         }
 
         if ($this->getUpdatedAtColumn()) {
-            $dispatchesEvents['updating'] = AuditableModelIsUpdating::class;
+            static::updating(function () {
+                event(new AuditableModelIsUpdating($this));
+            });
+
             $attrs[] = 'updated_by';
         }
 
         if ($this->checkDeletedAttr()) {
-            $dispatchesEvents['deleting'] = AuditableModelIsDeleting::class;
+            static::deleting(function () {
+                event(new AuditableModelIsDeleting($this));
+            });
+
             $attrs[] = 'deleted_by';
         }
 
         $this->guarded = array_merge($this->guarded, $attrs);
         $this->hidden = array_merge($this->hidden, $attrs);
-        $this->dispatchesEvents = array_merge_recursive($this->dispatchesEvents, $dispatchesEvents);
     }
 
     /**

@@ -11,6 +11,7 @@ abstract class AuditableEvent
 {
     use Dispatchable;
     use SerializesModels;
+
     /**
      * @var \Illuminate\Database\Eloquent\Model
      */
