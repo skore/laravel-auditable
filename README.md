@@ -4,7 +4,13 @@ Audit the users that performs actions to your application models
 
 ## Status
 
-[![packagist version](https://img.shields.io/packagist/v/skore-labs/laravel-auditable)](https://packagist.org/packages/skore-labs/laravel-auditable) [![StyleCI](https://github.styleci.io/repos/246383106/shield?style=flat&branch=master)](https://github.styleci.io/repos/246383106) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8f09d7031fe341e1a8c8eed9120a0e7b)](https://www.codacy.com/gh/skore/laravel-auditable?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=skore/laravel-auditable&amp;utm_campaign=Badge_Grade)
+[![packagist version](https://img.shields.io/packagist/v/skore-labs/laravel-auditable)](https://packagist.org/packages/skore-labs/laravel-auditable) [![StyleCI](https://github.styleci.io/repos/246383106/shield?style=flat&branch=master)](https://github.styleci.io/repos/246383106) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8f09d7031fe341e1a8c8eed9120a0e7b)](https://www.codacy.com/gh/skore/laravel-auditable?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=skore/laravel-auditable&amp;utm_campaign=Badge_Grade) [![Scc Count Badge](https://sloc.xyz/github/skore/laravel-auditable?category=code)](https://github.com/skore/laravel-auditable) [![Scc Count Badge](https://sloc.xyz/github/skore/laravel-auditable?category=comments)](https://github.com/skore/laravel-auditable)
+
+## Getting started
+
+```
+composer require skore-labs/laravel-auditable
+```
 
 ## Support
 
