@@ -12,8 +12,9 @@ class Schema
         /**
          * Add nullable auditable "created_by", "updated_by" or "deleted_by" columns.
          *
-         * @param bool $softDeletes
+         * @param bool   $softDeletes
          * @param string $foreignTable
+         *
          * @return void
          */
         return function (bool $softDeletes = false, string $foreignTable = 'users') {
@@ -43,6 +44,7 @@ class Schema
          * Indicate that the auditable columns should be dropped.
          *
          * @param bool $softDeletes
+         *
          * @return void
          */
         return function (bool $softDeletes = false) {

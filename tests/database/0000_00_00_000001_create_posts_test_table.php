@@ -12,7 +12,7 @@ class CreatePostsTestTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->text('content');
-            
+
             $table->timestamps();
             $table->softDeletes();
         });
