@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `replicating` event that fills createdBy / author (same way as creating does)
 - Tests to cover the little bit this package offers
 
+## Removed
+
+- Support for Laravel 7
+
 ## [2.0.1] - 2021-01-20
 
 ## Added
