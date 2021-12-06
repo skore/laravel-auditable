@@ -12,6 +12,88 @@ Audit the users that performs actions to your application models
 composer require skore-labs/laravel-auditable
 ```
 
+And write this on the models you want to have auditables:
+
+```php
+<?php
+
+namespace SkoreLabs\LaravelAuditable\Tests\Fixtures;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use SkoreLabs\LaravelAuditable\Traits\Auditable;
+
+class Post extends Model
+{
+    use Auditable;
+    // Add this one and it will auto-detect for the deletedBy
+    // use SoftDeletes;
+
+    /**
+     * The attributes that should be visible in serialization.
+     *
+     * @var array
+     */
+    protected $visible = ['title', 'content'];
+}
+```
+
+And this is how it should look like in your migration file:
+
+```php
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreatePostsTestTable extends Migration
+{
+    public function up()
+    {
+        Schema::create('posts', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('title');
+            $table->text('content');
+
+            $table->timestamps();
+            $table->softDeletes();
+            $table->auditables();
+        });
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists('posts');
+    }
+}
+```
+
+**Note: If you wanna remove it on the `down` method of your migrations, you can use `dropAuditables`.**
+
+```php
+    public function down()
+    {
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropAuditables();
+        });
+    }
+```
+
+### Methods
+
+These are all the relationships that the `Auditable` trait provides to your model:
+
+```php
+$post = Post::first();
+
+$post->createdBy; // Author of the post
+$post->updatedBy; // Author of the last update of the post
+$post->deletedBy; // Author of the deletion of the post
+
+$post->author; // Alias for createdBy
+```
+
 ## Support
 
 This and all of our Laravel packages follows as much as possibly can the LTS support of Laravel.
