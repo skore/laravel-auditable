@@ -38,6 +38,9 @@ class TestCase extends \Orchestra\Testbench\TestCase
             'database' => ':memory:',
             'prefix'   => '',
         ]);
+
+        // Package own config
+        $app['config']->set('auth.providers.users.model', 'SkoreLabs\LaravelAuditable\Tests\Fixtures\User');
     }
 
     /**
