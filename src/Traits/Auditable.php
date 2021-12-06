@@ -7,6 +7,9 @@ use SkoreLabs\LaravelAuditable\Events\AuditableModelIsCreating;
 use SkoreLabs\LaravelAuditable\Events\AuditableModelIsDeleting;
 use SkoreLabs\LaravelAuditable\Events\AuditableModelIsUpdating;
 
+/**
+ * @mixin \Illuminate\Database\Eloquent\Model
+ */
 trait Auditable
 {
     /**
@@ -20,6 +23,10 @@ trait Auditable
 
         if ($this->getCreatedAtColumn()) {
             static::creating(function () {
+                event(new AuditableModelIsCreating($this));
+            });
+
+            static::replicating(function () {
                 event(new AuditableModelIsCreating($this));
             });
 
