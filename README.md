@@ -59,6 +59,12 @@ class CreatePostsTestTable extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->auditables();
+
+            // or if has softDeletes (deleted_at column):
+            $table->auditables(true);
+
+            // also you might want to rename the users table:
+            $table->auditables(true, 'my_users_table');
         });
     }
 
@@ -76,6 +82,8 @@ class CreatePostsTestTable extends Migration
     {
         Schema::table('posts', function (Blueprint $table) {
             $table->dropAuditables();
+            // or if has softDeletes (deleted_at column):
+            $table->dropAuditables(true);
         });
     }
 ```

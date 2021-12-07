@@ -10,7 +10,7 @@ class AddAuditablesToPostsTestTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->auditables();
+            $table->auditables(true);
         });
     }
 

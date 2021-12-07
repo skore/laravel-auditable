@@ -16,6 +16,12 @@
     <include>
       <directory suffix=".php">./src</directory>
     </include>
+    <exclude>
+      <file>src/EventServiceProvider.php</file>
+      <file>src/Events/AuditableModelIsCreating.php</file>
+      <file>src/Events/AuditableModelIsDeleting.php</file>
+      <file>src/Events/AuditableModelIsUpdating.php</file>
+    </exclude>
     <report>
       <clover outputFile="clover.xml"/>
     </report>

@@ -22,11 +22,7 @@ class AuditableWasChanged
             return false;
         }
 
-        if ($event->model->isGuarded($actionStr)) {
-            $event->model->{lcfirst(Str::studly($actionStr))}()->associate($event->user->id);
-        } else {
-            $event->model->{$actionStr} = $event->user->id;
-        }
+        $event->model->{lcfirst(Str::studly($actionStr))}()->associate($event->user->id);
     }
 
     /**
