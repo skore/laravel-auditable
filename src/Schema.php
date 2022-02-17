@@ -48,13 +48,16 @@ class Schema
          * @return void
          */
         return function (bool $softDeletes = false) {
-            $columnsArr = ['created_by', 'updated_by'];
+           $columnsArr = ['created_by', 'updated_by'];
+
+            $this->dropForeignKey(['created_by']);
+            $this->dropForeignKey(['updated_by']);
 
             if ($softDeletes) {
+                $this->dropForeignKey(['deleted_by']);
                 $columnsArr[] = 'deleted_by';
             }
 
-            $this->dropForeign($columnsArr);
             $this->dropColumn($columnsArr);
         };
     }
