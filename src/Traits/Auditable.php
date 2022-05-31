@@ -26,25 +26,25 @@ trait Auditable
     public static function bootAuditable()
     {
         static::creating(function ($model) {
-            if (! $model->auditableDisabled && $model->getCreatedAtColumn()) {
+            if (!$model->auditableDisabled && $model->getCreatedAtColumn()) {
                 event(new AuditableModelIsCreating($model));
             }
         });
-        
+
         static::replicating(function ($model) {
-            if (! $model->auditableDisabled && $model->getCreatedAtColumn()) {
+            if (!$model->auditableDisabled && $model->getCreatedAtColumn()) {
                 event(new AuditableModelIsCreating($model));
             }
         });
 
         static::updating(function ($model) {
-            if (! $model->auditableDisabled && $model->getUpdatedAtColumn()) {
+            if (!$model->auditableDisabled && $model->getUpdatedAtColumn()) {
                 event(new AuditableModelIsUpdating($model));
             }
         });
 
         static::deleting(function ($model) {
-            if (! $model->auditableDisabled && $model->checkDeletedAttr()) {
+            if (!$model->auditableDisabled && $model->checkDeletedAttr()) {
                 event(new AuditableModelIsDeleting($model));
             }
         });
@@ -155,6 +155,7 @@ trait Auditable
      * Run callback function without auditable events.
      *
      * @param \Closure $callback
+     *
      * @return mixed
      */
     public function withoutAuditable(Closure $callback)
