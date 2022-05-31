@@ -16,7 +16,7 @@ trait Auditable
     /**
      * @var bool
      */
-    protected $auditableDisabled = false;
+    public $auditableDisabled = false;
 
     /**
      * Boot the auditable trait for the model.
