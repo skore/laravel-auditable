@@ -2,6 +2,7 @@
 
 namespace SkoreLabs\LaravelAuditable\Traits;
 
+use Closure;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use SkoreLabs\LaravelAuditable\Events\AuditableModelIsCreating;
 use SkoreLabs\LaravelAuditable\Events\AuditableModelIsDeleting;
@@ -13,6 +14,43 @@ use SkoreLabs\LaravelAuditable\Events\AuditableModelIsUpdating;
 trait Auditable
 {
     /**
+     * @var bool
+     */
+    protected $auditableDisabled = false;
+
+    /**
+     * Boot the auditable trait for the model.
+     *
+     * @return void
+     */
+    public static function bootAuditable()
+    {
+        static::creating(function ($model) {
+            if (! $model->auditableDisabled && $model->getCreatedAtColumn()) {
+                event(new AuditableModelIsCreating($model));
+            }
+        });
+        
+        static::replicating(function ($model) {
+            if (! $model->auditableDisabled && $model->getCreatedAtColumn()) {
+                event(new AuditableModelIsCreating($model));
+            }
+        });
+
+        static::updating(function ($model) {
+            if (! $model->auditableDisabled && $model->getUpdatedAtColumn()) {
+                event(new AuditableModelIsUpdating($model));
+            }
+        });
+
+        static::deleting(function ($model) {
+            if (! $model->auditableDisabled && $model->checkDeletedAttr()) {
+                event(new AuditableModelIsDeleting($model));
+            }
+        });
+    }
+
+    /**
      * Initialize the auditable trait for an instance.
      *
      * @return void
@@ -22,30 +60,14 @@ trait Auditable
         $attrs = [];
 
         if ($this->getCreatedAtColumn()) {
-            static::creating(function () {
-                event(new AuditableModelIsCreating($this));
-            });
-
-            static::replicating(function () {
-                event(new AuditableModelIsCreating($this));
-            });
-
             $attrs[] = 'created_by';
         }
 
         if ($this->getUpdatedAtColumn()) {
-            static::updating(function () {
-                event(new AuditableModelIsUpdating($this));
-            });
-
             $attrs[] = 'updated_by';
         }
 
         if ($this->checkDeletedAttr()) {
-            static::deleting(function () {
-                event(new AuditableModelIsDeleting($this));
-            });
-
             $attrs[] = 'deleted_by';
         }
 
@@ -103,5 +125,46 @@ trait Auditable
     protected function checkDeletedAttr()
     {
         return isset(class_uses(self::class)[SoftDeletes::class]);
+    }
+
+    /**
+     * Disable auditable events for this model instance.
+     *
+     * @return $this
+     */
+    public function disableAuditable()
+    {
+        $this->auditableDisabled = true;
+
+        return $this;
+    }
+
+    /**
+     * Disable auditable events for this model instance.
+     *
+     * @return $this
+     */
+    public function enableAuditable()
+    {
+        $this->auditableDisabled = false;
+
+        return $this;
+    }
+
+    /**
+     * Run callback function without auditable events.
+     *
+     * @param \Closure $callback
+     * @return mixed
+     */
+    public function withoutAuditable(Closure $callback)
+    {
+        $this->disableAuditable();
+
+        $result = $callback();
+
+        $this->enableAuditable();
+
+        return $result;
     }
 }
