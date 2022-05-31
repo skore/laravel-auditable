@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.0] - 2022-05-31
+
+### Fixed
+
+- Event listeners being registered more than once
+
+### Added
+
+- Convenience methods to ignore auditable events: `withoutAuditable`, `disableAuditable` and `enableAuditable`
+
 ## [2.2.1] - 2022-02-17
 
 ### Fixed
