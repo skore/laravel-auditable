@@ -21,7 +21,11 @@
     },
     "autoload": {
         "psr-4": {
-            "SkoreLabs\\LaravelAuditable\\": "src",
+            "SkoreLabs\\LaravelAuditable\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "SkoreLabs\\LaravelAuditable\\Tests\\": "tests"
         }
     },
