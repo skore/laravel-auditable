@@ -5,19 +5,19 @@
     "authors": [
         {
             "name": "Rubén Robles",
-            "email": "d8vjork@outlook.com"
+            "email": "me@d8vjork.com"
         }
     ],
     "require": {
-        "php": "^7.2|^8.0|^8.1",
-        "illuminate/database": "^6.0|^8.0|^9.0",
-        "illuminate/support": "^6.0|^8.0|^9.0"
+        "php": "^8.0|^8.1|^8.2",
+        "illuminate/database": "^9.0|^10.0",
+        "illuminate/support": "^9.0|^10.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^4.0|^5.0|^6.0|^7.0",
-        "nunomaduro/larastan": "^1.0",
+        "orchestra/testbench": "^7.0|^8.0",
+        "nunomaduro/larastan": "^2.0",
         "phpstan/phpstan": "^1.0",
-        "phpunit/phpunit": "^7.0|^9.0"
+        "phpunit/phpunit": "^9.0|^10.0"
     },
     "autoload": {
         "psr-4": {
