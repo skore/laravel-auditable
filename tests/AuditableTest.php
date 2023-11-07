@@ -2,22 +2,31 @@
 
 namespace SkoreLabs\LaravelAuditable\Tests;
 
-use Illuminate\Foundation\Testing\WithFaker;
+use SkoreLabs\LaravelAuditable\Events\AuditableEvent;
 use SkoreLabs\LaravelAuditable\Tests\Fixtures\Post;
 use SkoreLabs\LaravelAuditable\Tests\Fixtures\User;
 
 class AuditableTest extends TestCase
 {
-    use WithFaker;
-
     /**
      * @var \SkoreLabs\LaravelAuditable\Tests\Fixtures\User
      */
     protected $user;
 
+    /**
+     * @var \SkoreLabs\LaravelAuditable\Tests\Fixtures\User
+     */
+    protected $anotherUser;
+
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->anotherUser = User::create([
+            'email'    => 'another_user@localhost.com',
+            'name'     => 'Another',
+            'password' => '1234',
+        ]);
 
         $this->user = User::create([
             'email'    => 'admin@localhost.com',
@@ -32,8 +41,8 @@ class AuditableTest extends TestCase
     {
         /** @var \SkoreLabs\LaravelAuditable\Tests\Fixtures\Post $post */
         $post = Post::create([
-            'title'   => $this->faker->words(3, true),
-            'content' => $this->faker->paragraph(),
+            'title'   => 'hello user',
+            'content' => 'lorem ipsum',
         ]);
 
         $this->assertTrue($post->created_by === $this->user->id);
@@ -49,8 +58,8 @@ class AuditableTest extends TestCase
     {
         /** @var \SkoreLabs\LaravelAuditable\Tests\Fixtures\Post $post */
         $post = Post::create([
-            'title'   => $this->faker->words(3, true),
-            'content' => $this->faker->paragraph(),
+            'title'   => 'hello user',
+            'content' => 'lorem ipsum',
         ]);
 
         $duplicatedPost = $post->replicate();
@@ -70,8 +79,8 @@ class AuditableTest extends TestCase
     {
         /** @var \SkoreLabs\LaravelAuditable\Tests\Fixtures\Post $post */
         $post = Post::create([
-            'title'   => $this->faker->words(3, true),
-            'content' => $this->faker->paragraph(),
+            'title'   => 'hello user',
+            'content' => 'lorem ipsum',
         ]);
 
         $post->update(['title' => 'new title']);
@@ -87,8 +96,8 @@ class AuditableTest extends TestCase
     {
         /** @var \SkoreLabs\LaravelAuditable\Tests\Fixtures\Post $post */
         $post = Post::create([
-            'title'   => $this->faker->words(3, true),
-            'content' => $this->faker->paragraph(),
+            'title'   => 'hello user',
+            'content' => 'lorem ipsum',
         ]);
 
         $post->delete();
@@ -98,5 +107,47 @@ class AuditableTest extends TestCase
         $this->assertTrue($post->deleted_by === $this->user->id);
 
         $this->assertTrue($post->deletedBy->id === $this->user->id);
+    }
+
+    public function test_created_by_uses_forced_user_even_when_authenticated_exists()
+    {
+        AuditableEvent::setUser($this->anotherUser);
+
+        /** @var \SkoreLabs\LaravelAuditable\Tests\Fixtures\Post $post */
+        $post = Post::create([
+            'title'   => 'hello user',
+            'content' => 'lorem ipsum',
+        ]);
+
+        $this->assertTrue($post->created_by === $this->anotherUser->id);
+        $this->assertNull($post->updated_by);
+        $this->assertNull($post->deleted_by);
+
+        // Relationship & alias
+        $this->assertTrue($post->createdBy->id === $this->anotherUser->id);
+        $this->assertTrue($post->author->id === $this->anotherUser->id);
+    }
+
+    public function test_updated_by_uses_forced_user_only_when_action_sent()
+    {
+        AuditableEvent::setUser($this->anotherUser, 'updating');
+
+        /** @var \SkoreLabs\LaravelAuditable\Tests\Fixtures\Post $post */
+        $post = Post::create([
+            'title'   => 'hello user',
+            'content' => 'lorem ipsum',
+        ]);
+
+        $this->assertTrue($post->created_by === $this->user->id);
+        $this->assertNull($post->updated_by);
+        $this->assertNull($post->deleted_by);
+        
+        $post->update(['title' => 'hello another']);
+
+        $this->assertTrue($post->updated_by === $this->anotherUser->id);
+
+        // Relationship & alias
+        $this->assertTrue($post->createdBy->id === $this->user->id);
+        $this->assertTrue($post->author->id === $this->user->id);
     }
 }
