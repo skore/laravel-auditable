@@ -23,14 +23,14 @@ class AuditableTest extends TestCase
         parent::setUp();
 
         $this->anotherUser = User::create([
-            'email' => 'another_user@localhost.com',
-            'name' => 'Another',
+            'email'    => 'another_user@localhost.com',
+            'name'     => 'Another',
             'password' => '1234',
         ]);
 
         $this->user = User::create([
-            'email' => 'admin@localhost.com',
-            'name' => 'Admin',
+            'email'    => 'admin@localhost.com',
+            'name'     => 'Admin',
             'password' => '1234',
         ]);
 
@@ -41,7 +41,7 @@ class AuditableTest extends TestCase
     {
         /** @var \SkoreLabs\LaravelAuditable\Tests\Fixtures\Post $post */
         $post = Post::create([
-            'title' => 'hello user',
+            'title'   => 'hello user',
             'content' => 'lorem ipsum',
         ]);
 
@@ -60,7 +60,7 @@ class AuditableTest extends TestCase
     {
         /** @var \SkoreLabs\LaravelAuditable\Tests\Fixtures\Post $post */
         $post = Post::create([
-            'title' => 'hello user',
+            'title'   => 'hello user',
             'content' => 'lorem ipsum',
         ]);
 
@@ -83,7 +83,7 @@ class AuditableTest extends TestCase
     {
         /** @var \SkoreLabs\LaravelAuditable\Tests\Fixtures\Post $post */
         $post = Post::create([
-            'title' => 'hello user',
+            'title'   => 'hello user',
             'content' => 'lorem ipsum',
         ]);
 
@@ -102,7 +102,7 @@ class AuditableTest extends TestCase
     {
         /** @var \SkoreLabs\LaravelAuditable\Tests\Fixtures\Post $post */
         $post = Post::create([
-            'title' => 'hello user',
+            'title'   => 'hello user',
             'content' => 'lorem ipsum',
         ]);
 
@@ -123,7 +123,7 @@ class AuditableTest extends TestCase
 
         /** @var \SkoreLabs\LaravelAuditable\Tests\Fixtures\Post $post */
         $post = Post::create([
-            'title' => 'hello user',
+            'title'   => 'hello user',
             'content' => 'lorem ipsum',
         ]);
 
@@ -144,7 +144,7 @@ class AuditableTest extends TestCase
 
         /** @var \SkoreLabs\LaravelAuditable\Tests\Fixtures\Post $post */
         $post = Post::create([
-            'title' => 'hello user',
+            'title'   => 'hello user',
             'content' => 'lorem ipsum',
         ]);
 

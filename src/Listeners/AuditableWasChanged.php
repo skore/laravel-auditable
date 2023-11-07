@@ -33,7 +33,7 @@ class AuditableWasChanged
     public function getActionColumn(string $action): string
     {
         return match ($action) {
-            default => 'created_by',
+            default    => 'created_by',
             'creating' => 'created_by',
             'updating' => 'updated_by',
             'deleting' => 'deleted_by',
