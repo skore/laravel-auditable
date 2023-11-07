@@ -141,7 +141,7 @@ class AuditableTest extends TestCase
         $this->assertTrue($post->created_by === $this->user->id);
         $this->assertNull($post->updated_by);
         $this->assertNull($post->deleted_by);
-        
+
         $post->update(['title' => 'hello another']);
 
         $this->assertTrue($post->updated_by === $this->anotherUser->id);

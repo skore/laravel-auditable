@@ -42,7 +42,7 @@ abstract class AuditableEvent
         if (app()->has(static::CONTAINER_KEY)) {
             [$user, $action] = app()->get(static::CONTAINER_KEY);
 
-            $this->user = ! $action || $this->action === $action ? $user : null;
+            $this->user = !$action || $this->action === $action ? $user : null;
         }
 
         $this->user ??= Auth::user();
