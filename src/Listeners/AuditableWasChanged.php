@@ -9,10 +9,6 @@ class AuditableWasChanged
 {
     /**
      * Handle the event.
-     *
-     * @param \App\Events\AuditableEvent $event
-     *
-     * @return void
      */
     public function handle(AuditableEvent $event)
     {
@@ -23,30 +19,24 @@ class AuditableWasChanged
         }
 
         $event->model->{lcfirst(Str::studly($actionStr))}()->associate($event->user->id);
+
+        // TODO: No other way as \Illuminate\Database\Eloquent\SoftDeletingScope::extend()
+        // does the trick under Eloquent's query builder...
+        if ($event->action === 'deleting') {
+            $event->model->saveQuietly();
+        }
     }
 
     /**
      * Get action related column of the model.
-     *
-     * @param string $action
-     *
-     * @return string
      */
-    public function getActionColumn($action)
+    public function getActionColumn(string $action): string
     {
-        switch ($action) {
-            default:
-            case 'creating':
-                return 'created_by';
-                break;
-
-            case 'updating':
-                return 'updated_by';
-                break;
-
-            case 'deleting':
-                return 'deleted_by';
-                break;
-        }
+        return match ($action) {
+            default => 'created_by',
+            'creating' => 'created_by',
+            'updating' => 'updated_by',
+            'deleting' => 'deleted_by',
+        };
     }
 }
