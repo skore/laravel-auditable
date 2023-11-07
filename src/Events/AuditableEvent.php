@@ -53,7 +53,7 @@ abstract class AuditableEvent
      */
     public static function setUser(?Authenticatable $user = null, string $action = null): void
     {
-        if (! $user) {
+        if (!$user) {
             return;
         }
 
