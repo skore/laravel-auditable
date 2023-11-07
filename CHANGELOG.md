@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.2] - 2023-11-07
+
+### Fixed
+
+- SoftDeleting (deleting) model event isn't performing a save so we need to do it ourselves (done via package's event listener only when delete event)
+
 ## [2.5.1] - 2023-11-07
 
 ### Fixed
