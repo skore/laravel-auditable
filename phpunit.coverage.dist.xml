@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
+  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.0/phpunit.xsd"
   bootstrap="vendor/autoload.php"
   backupGlobals="false"
   colors="true"
-  processIsolation="true"
   stopOnFailure="false"
   cacheDirectory=".phpunit.cache"
   backupStaticProperties="false"
 >
-  <coverage>
+  <source>
     <include>
-      <directory suffix=".php">./src</directory>
+      <directory suffix=".php">src</directory>
     </include>
-    <exclude>
-      <file>src/EventServiceProvider.php</file>
-      <file>src/Events/AuditableModelIsCreating.php</file>
-      <file>src/Events/AuditableModelIsDeleting.php</file>
-      <file>src/Events/AuditableModelIsUpdating.php</file>
-    </exclude>
+  </source>
+  <coverage includeUncoveredFiles="true"
+    pathCoverage="false"
+    ignoreDeprecatedCodeUnits="true"
+    disableCodeCoverageIgnore="true">
     <report>
       <clover outputFile="clover.xml"/>
     </report>
@@ -28,4 +26,9 @@
       <directory>tests</directory>
     </testsuite>
   </testsuites>
+  <php>
+    <ini name="memory_limit" value="2048M"/>
+    <env name="DB_CONNECTION" value="sqlite" force="true"/>
+    <env name="DB_DATABASE" value=":memory:" force="true"/>
+  </php>
 </phpunit>
