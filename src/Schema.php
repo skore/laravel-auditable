@@ -2,12 +2,14 @@
 
 namespace SkoreLabs\LaravelAuditable;
 
+use Closure;
+
 /**
  * @mixin \Illuminate\Database\Schema\Blueprint
  */
 class Schema
 {
-    public function auditables()
+    public function auditables(): Closure
     {
         /**
          * Add nullable auditable "created_by", "updated_by" or "deleted_by" columns.
@@ -38,7 +40,7 @@ class Schema
         };
     }
 
-    public function dropAuditables()
+    public function dropAuditables(): Closure
     {
         /**
          * Indicate that the auditable columns should be dropped.
@@ -50,11 +52,11 @@ class Schema
         return function (bool $softDeletes = false) {
             $columnsArr = ['created_by', 'updated_by'];
 
-            $this->dropForeignKey(['created_by']);
-            $this->dropForeignKey(['updated_by']);
+            $this->dropForeign(['created_by']);
+            $this->dropForeign(['updated_by']);
 
             if ($softDeletes) {
-                $this->dropForeignKey(['deleted_by']);
+                $this->dropForeign(['deleted_by']);
                 $columnsArr[] = 'deleted_by';
             }
 
