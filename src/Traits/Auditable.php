@@ -10,6 +10,7 @@ use SkoreLabs\LaravelAuditable\Events\AuditableModelIsUpdating;
 
 /**
  * @mixin \Illuminate\Database\Eloquent\Model
+ *
  * @phpstan-ignore trait.unusedTrait
  */
 trait Auditable
