@@ -2,7 +2,7 @@ includes:
     - vendor/larastan/larastan/extension.neon
 
 parameters:
-    level: 4
+    level: 6
 
     paths:
         - src
@@ -10,5 +10,8 @@ parameters:
 
     tmpDir: .phpstan/cache
 
-    checkMissingIterableValueType: false
-    checkGenericClassInNonGenericObjectType: false
+    treatPhpDocTypesAsCertain: false
+
+    ignoreErrors:
+        - identifier: trait.unused
+          path: src/Traits/Auditable.php
