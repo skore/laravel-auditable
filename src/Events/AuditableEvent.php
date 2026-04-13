@@ -51,7 +51,7 @@ abstract class AuditableEvent
     /**
      * Set user for auditable event when action, all actions if null.
      */
-    public static function setUser(?Authenticatable $user = null, string $action = null): void
+    public static function setUser(?Authenticatable $user = null, ?string $action = null): void
     {
         if (!$user) {
             return;
