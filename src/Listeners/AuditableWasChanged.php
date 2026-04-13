@@ -10,15 +10,16 @@ class AuditableWasChanged
     /**
      * Handle the event.
      */
-    public function handle(AuditableEvent $event)
+    public function handle(AuditableEvent $event): void
     {
         $actionStr = $this->getActionColumn($event->action);
+        $userId = $event->user->getAuthIdentifier();
 
-        if (blank($event->user) || $event->model->{$actionStr} == $event->user->id) {
-            return false;
+        if (blank($event->user) || $event->model->{$actionStr} == $userId) {
+            return;
         }
 
-        $event->model->{lcfirst(Str::studly($actionStr))}()->associate($event->user->id);
+        $event->model->{lcfirst(Str::studly($actionStr))}()->associate($userId);
 
         // TODO: No other way as \Illuminate\Database\Eloquent\SoftDeletingScope::extend()
         // does the trick under Eloquent's query builder...
