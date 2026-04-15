@@ -13,7 +13,7 @@ class AuditableWasChanged
     public function handle(AuditableEvent $event): void
     {
         $actionStr = $this->getActionColumn($event->action);
-        $userId = $event->user->getAuthIdentifier();
+        $userId = $event->user?->getAuthIdentifier();
 
         if (blank($event->user) || $event->model->{$actionStr} == $userId) {
             return;
